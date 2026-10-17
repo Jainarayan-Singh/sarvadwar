@@ -284,7 +284,7 @@ def load_config(env, static_dir):
     section = {
         "title": r.str("PRODUCTS_TITLE", "Products", 60),
         "fallback_label": r.str("PRODUCTS_FALLBACK_LABEL", "Backup site", 30),
-        "new_tab": r.bool("PRODUCTS_OPEN_IN_NEW_TAB", False),
+        "new_tab": r.bool("PRODUCTS_OPEN_IN_NEW_TAB", True),
         "default_cta": r.str("PRODUCTS_DEFAULT_CTA_LABEL", "Open product", 30),
     }
 
