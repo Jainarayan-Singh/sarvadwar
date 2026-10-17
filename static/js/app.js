@@ -166,6 +166,15 @@
     }
   }
 
+  /* Inside an installed or app-style window (the Smart AI Exam Portal desktop launcher) a new tab would escape to a separate
+     browser window, so product links open in the window they were clicked in. A normal browser tab is unaffected. */
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    document.querySelectorAll('a[data-product-link][target="_blank"]').forEach(function (a) {
+      a.removeAttribute('target');
+      a.querySelectorAll('.sr-only').forEach(function (hint) { hint.textContent = hint.textContent.replace(' (opens in a new tab)', ''); });
+    });
+  }
+
   if ('IntersectionObserver' in window && animated()) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {

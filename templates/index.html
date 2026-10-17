@@ -43,8 +43,8 @@
           <h3 class="panel-title">{{ p.name }}</h3>
           <p class="panel-text">{{ p.description }}</p>
           <div class="panel-actions">
-            <a class="btn btn-primary btn-lg" href="{{ p.url }}"{{ target }}>{{ p.cta_label }}<span class="sr-only">: {{ p.name }}{{ ' (opens in a new tab)' if new_tab }}</span><span class="btn-chip">{{ icon('arrow-up-right', 'icon icon-sm') }}</span></a>
-            {% if p.fallback_url %}<a class="btn btn-ghost btn-lg" href="{{ p.fallback_url }}"{{ target }}>{{ c.section.fallback_label }}<span class="sr-only"> for {{ p.name }}{{ ' (opens in a new tab)' if new_tab }}</span></a>{% endif %}
+            <a class="btn btn-primary btn-lg" href="{{ p.url }}" data-product-link{{ target }}>{{ p.cta_label }}<span class="sr-only">: {{ p.name }}{{ ' (opens in a new tab)' if new_tab }}</span><span class="btn-chip">{{ icon('arrow-up-right', 'icon icon-sm') }}</span></a>
+            {% if p.fallback_url %}<a class="btn btn-ghost btn-lg" href="{{ p.fallback_url }}" data-product-link{{ target }}>{{ c.section.fallback_label }}<span class="sr-only"> for {{ p.name }}{{ ' (opens in a new tab)' if new_tab }}</span></a>{% endif %}
           </div>
         </div>
         <div class="panel-art" aria-hidden="true">
