@@ -1,0 +1,24 @@
+{% set doc_title = "Privacy Policy" %}
+{% set doc_summary = "What " ~ c.app.name ~ " stores and what it does not." %}
+{% extends "document.html" %}
+{% block doc_body %}
+<p>{{ c.app.name }} is a static directory of products. It does not ask for or store any personal information.</p>
+<h2>What this site stores</h2>
+<ul>
+  <li><strong>In your browser:</strong> your theme choice, saved locally so the page looks the same next time. It is never sent to the server.</li>
+  <li><strong>Cookies:</strong> none are set by this site.</li>
+  <li><strong>Accounts and forms:</strong> there are none, so nothing you type is collected.</li>
+</ul>
+<h2>Server logs</h2>
+<p>Like any website, the host that serves this page records technical request details such as the IP address, time and browser type in its server logs. This is handled by the hosting provider.</p>
+{% if c.analytics.enabled %}
+<h2>Analytics</h2>
+<p>This site uses {{ 'Plausible' if c.analytics.provider == 'plausible' else 'Google Analytics 4' }} to count visits.</p>
+{% else %}
+<h2>Analytics</h2>
+<p>This site does not use analytics or advertising trackers.</p>
+{% endif %}
+<h2>The products</h2>
+<p>When you open a product you leave this site. That product is a separate application with its own privacy practices; read its own policy before using it.</p>
+{% if c.contact_email %}<h2>Questions</h2><p><a href="mailto:{{ c.contact_email }}">{{ c.contact_email }}</a></p>{% endif %}
+{% endblock %}

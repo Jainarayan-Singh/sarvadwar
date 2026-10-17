@@ -1,0 +1,13 @@
+{% set doc_title = "About " ~ c.app.name %}
+{% set doc_summary = "What " ~ c.app.name ~ " is and what it is not." %}
+{% extends "document.html" %}
+{% block doc_body %}
+<p>{{ c.app.name }} is a single page that lists the products available and opens each one in its own tab. It is a directory, nothing more.</p>
+<h2>Products</h2>
+<ul>
+  {% for p in c.products %}<li><strong>{{ p.name }}</strong>: {{ p.description }}</li>{% endfor %}
+</ul>
+<h2>What it is not</h2>
+<p>{{ c.app.name }} has no accounts, no sign-in and no database. It does not share data between the products and it does not sign you in to them. Each product is a separate application with its own account, data and policies.</p>
+{% if c.contact_email %}<p>Questions? See <a href="/contact">Contact</a>.</p>{% endif %}
+{% endblock %}

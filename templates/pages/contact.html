@@ -1,0 +1,7 @@
+{% set doc_title = "Contact" %}
+{% set doc_summary = "How to reach " ~ c.app.name ~ "." %}
+{% extends "document.html" %}
+{% block doc_body %}
+<p>For questions about {{ c.app.name }}, write to <a href="mailto:{{ c.contact_email }}">{{ c.contact_email }}</a>.</p>
+<p>For help with a product itself, contact that product directly; it has its own account and data.</p>
+{% endblock %}

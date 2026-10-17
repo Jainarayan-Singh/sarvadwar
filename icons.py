@@ -21,6 +21,7 @@ PRODUCT_ICONS = {
 
 UI_ICONS = {
     "arrow-up-right": "<path d=\"M7 17L17 7M8 7h9v9\"/>",
+    "arrow-left": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>",
     "arrow-down": "<path d=\"M12 5v14M6 13l6 6 6-6\"/>",
     "menu": "<path d=\"M4 7h16M4 12h16M4 17h16\"/>",
     "close": "<path d=\"M6 6l12 12M18 6L6 18\"/>",

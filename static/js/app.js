@@ -133,6 +133,39 @@
     });
   });
 
+  var back = document.querySelector('[data-go-back]');
+  if (back) {
+    back.addEventListener('click', function () {
+      if (window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+      try {
+        if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
+          window.location.href = document.referrer;
+          return;
+        }
+      } catch (e) {}
+      window.location.href = '/';
+    });
+  }
+
+  var particles = document.querySelector('[data-particles]');
+  if (particles && animated()) {
+    var tones = ['var(--accent)', 'var(--err-purple)', 'var(--err-cyan)', 'var(--err-amber)'];
+    for (var i = 0; i < 40; i += 1) {
+      var dot = document.createElement('div');
+      dot.className = 'err-particle';
+      dot.style.setProperty('--left', Math.random() * 100 + '%');
+      dot.style.setProperty('--bottom', Math.random() * -20 + '%');
+      dot.style.setProperty('--size', Math.random() * 3 + 1 + 'px');
+      dot.style.setProperty('--tone', tones[Math.floor(Math.random() * tones.length)]);
+      dot.style.setProperty('--duration', Math.random() * 12 + 8 + 's');
+      dot.style.setProperty('--delay', Math.random() * -15 + 's');
+      particles.appendChild(dot);
+    }
+  }
+
   if ('IntersectionObserver' in window && animated()) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {

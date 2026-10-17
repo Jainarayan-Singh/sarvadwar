@@ -338,13 +338,6 @@ def load_config(env, static_dir):
     contact = {"label": r.str("CONTACT_LABEL", "Contact", 30), "href": f"mailto:{contact_email}", "external": False} if contact_email else None
     docs_url = r.url("DOCS_URL")
     docs = {"label": r.str("DOCS_LABEL", "Documentation", 30), "href": docs_url, "external": True} if docs_url else None
-    privacy_url = r.url("PRIVACY_URL")
-    terms_url = r.url("TERMS_URL")
-    legal = []
-    if privacy_url:
-        legal.append({"label": r.str("PRIVACY_LABEL", "Privacy", 30), "href": privacy_url, "external": True})
-    if terms_url:
-        legal.append({"label": r.str("TERMS_LABEL", "Terms", 30), "href": terms_url, "external": True})
 
     nav = r.links("NAV_LINKS_JSON")
     extra = support or contact
@@ -363,7 +356,7 @@ def load_config(env, static_dir):
     if docs:
         footer_links.insert(0, docs)
     footer = {
-        "links": footer_links + [x for x in (support, contact) if x] + legal + r.links("SOCIAL_LINKS_JSON"),
+        "links": footer_links + ([support] if support else []) + r.links("SOCIAL_LINKS_JSON"),
         "owner": r.str("COPYRIGHT_OWNER", name, 80),
         "start_year": start_year,
     }
@@ -439,6 +432,7 @@ def load_config(env, static_dir):
         "products": visible,
         "nav": nav,
         "header_cta": cta if cta_label and cta else None,
+        "contact_email": contact_email,
         "footer": footer,
         "theme": theme,
         "motion": motion,

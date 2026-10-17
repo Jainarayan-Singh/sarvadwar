@@ -1,14 +1,26 @@
 {% extends "base.html" %}
-{% set page_title = title ~ " – " ~ c.app.name %}
+{% set page_title = "Error " ~ code ~ " – " ~ c.app.name %}
 {% set page_description = text %}
 {% set noindex = true %}
+{% set bare = true %}
 {% block body %}
-<main id="main" class="message">
-  <div class="container message-inner">
-    <p class="message-code" data-reveal>{{ code }}</p>
-    <h1 class="message-title" data-reveal>{{ title }}</h1>
-    <p class="message-text" data-reveal>{{ text }}</p>
-    <a class="btn btn-primary" href="/" data-reveal>Back to home</a>
+<div class="err-orb err-orb-1"></div>
+<div class="err-orb err-orb-2"></div>
+<div class="err-orb err-orb-3"></div>
+<div class="err-grid"></div>
+<div class="err-scanline"></div>
+<div class="err-particles" data-particles></div>
+
+<main id="main" class="err-scene">
+  <div class="err-card">
+    <div class="err-code-wrap" data-code="{{ code }}"><span class="err-code">{{ code }}</span></div>
+    <div class="err-pill"><span class="err-pill-dot"></span>{{ label }}</div>
+    <h1 class="err-title">{{ heading }}</h1>
+    <p class="err-text">{{ text }}</p>
+    <div class="err-actions">
+      <a class="err-btn err-btn-primary" href="/">{{ icon('home', 'icon icon-sm') }}Back to Platform</a>
+      <button class="err-btn err-btn-ghost" type="button" data-go-back>{{ icon('arrow-left', 'icon icon-sm') }}Go Back</button>
+    </div>
   </div>
 </main>
 {% endblock %}

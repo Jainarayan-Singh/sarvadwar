@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% set page_title = doc_title ~ " – " ~ c.app.name %}
+{% set page_description = doc_summary %}
+{% block body %}
+<main id="main" class="doc">
+  <div class="container doc-inner">
+    <header class="doc-head">
+      <h1 class="doc-title">{{ doc_title }}</h1>
+      <p class="doc-updated">Last updated October 2026</p>
+    </header>
+    <div class="doc-body">
+      {% block doc_body %}{% endblock %}
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -86,6 +86,24 @@ def create_app(env=None):
     def index():
         return render_template("index.html")
 
+    @app.get("/about")
+    def about():
+        return render_template("pages/about.html")
+
+    @app.get("/privacy")
+    def privacy():
+        return render_template("pages/privacy.html")
+
+    @app.get("/terms")
+    def terms():
+        return render_template("pages/terms.html")
+
+    @app.get("/contact")
+    def contact():
+        if not config["contact_email"]:
+            abort(404)
+        return render_template("pages/contact.html")
+
     @app.get("/healthz")
     def healthz():
         return Response("ok", mimetype="text/plain", headers={"Cache-Control": "no-store"})
@@ -118,13 +136,13 @@ def create_app(env=None):
 
     @app.errorhandler(404)
     def not_found(_):
-        return render_template("message.html", code="404", title="Page not found",
-                               text="The page you are looking for does not exist or may have moved."), 404
+        return render_template("message.html", code="404", label="Not Found", heading="Page not found",
+                               text="The resource you are looking for has moved, been deleted, or never existed. Double-check the URL or head back to the platform."), 404
 
     @app.errorhandler(500)
     def server_error(_):
-        return render_template("message.html", code="500", title="Something went wrong",
-                               text="An unexpected error occurred while loading this page. Please try again in a moment."), 500
+        return render_template("message.html", code="500", label="Server Error", heading="Something went wrong",
+                               text="Something went wrong on our end. Please try again in a moment."), 500
 
     return app
 

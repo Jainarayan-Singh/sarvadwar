@@ -1,0 +1,17 @@
+{% set doc_title = "Terms of Service" %}
+{% set doc_summary = "The terms for using " ~ c.app.name ~ "." %}
+{% extends "document.html" %}
+{% block doc_body %}
+<p>By using {{ c.app.name }} you agree to these terms.</p>
+<h2>What this site does</h2>
+<p>{{ c.app.name }} lists products and links to them. It does not provide those products, and it does not control them.</p>
+<h2>The products</h2>
+<p>Each product is a separate application with its own terms, account and policies. Your use of a product is governed by that product, not by this page.</p>
+<h2>Availability</h2>
+<p>This site and the links on it are provided as is, without warranties. A product may be unavailable, move to a different address or be removed.</p>
+<h2>Acceptable use</h2>
+<p>Do not try to disrupt this site or probe it for weaknesses without permission.</p>
+<h2>Changes</h2>
+<p>These terms may be updated. The date at the top shows the latest version.</p>
+{% if c.contact_email %}<h2>Contact</h2><p><a href="mailto:{{ c.contact_email }}">{{ c.contact_email }}</a></p>{% endif %}
+{% endblock %}

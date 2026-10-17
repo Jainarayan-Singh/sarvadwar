@@ -80,10 +80,12 @@ If a value in `.env` is invalid, the app refuses to start and prints every probl
 | Hero | `HERO_HEADLINE`, `HERO_DESCRIPTION`, `HERO_PRIMARY_CTA_LABEL`, `HERO_SECONDARY_CTA_LABEL`, `HERO_SECONDARY_CTA_URL` |
 | Products | `PRODUCT_IDS`, `PRODUCTS_TITLE`, `PRODUCTS_OPEN_IN_NEW_TAB`, `PRODUCTS_DEFAULT_CTA_LABEL`, `PRODUCTS_FALLBACK_LABEL` |
 | Navigation | `NAV_LINKS_JSON`, `HEADER_CTA_LABEL`, `HEADER_CTA_URL` |
-| Footer | `CONTACT_EMAIL`, `SUPPORT_URL`, `DOCS_URL`, `PRIVACY_URL`, `TERMS_URL`, `SOCIAL_LINKS_JSON`, `FOOTER_LINKS_JSON`, `COPYRIGHT_OWNER`, `COPYRIGHT_START_YEAR` |
+| Footer | `CONTACT_EMAIL`, `SUPPORT_URL`, `DOCS_URL`, `SOCIAL_LINKS_JSON`, `FOOTER_LINKS_JSON`, `COPYRIGHT_OWNER`, `COPYRIGHT_START_YEAR` |
 | Theme | `SUPPORTED_THEMES`, `DEFAULT_THEME`, `ANIMATIONS_ENABLED` |
 | SEO | `SEO_TITLE`, `SEO_DESCRIPTION`, `SEO_IMAGE_PATH`, `SEO_IMAGE_ALT`, `SEO_INDEX` |
 | Analytics | `ANALYTICS_ENABLED`, `ANALYTICS_PROVIDER`, `ANALYTICS_ID`, `ANALYTICS_SCRIPT_URL` |
+
+About, Privacy and Terms pages are built in. The Contact page and footer link appear only when `CONTACT_EMAIL` is set.
 
 Optional pieces that are not configured (contact, social and legal links, header button, secondary hero button, analytics) are left out of the page entirely. Real environment variables always override `.env`, and values containing `#` must be quoted.
 

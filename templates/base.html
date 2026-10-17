@@ -50,6 +50,7 @@
 <body id="top">
 <a class="skip-link" href="#main">Skip to content</a>
 
+{% if not bare %}
 <header class="site-header" data-header>
   <div class="container header-inner">
     {{ brand() }}
@@ -84,23 +85,28 @@
     {% endif %}
   </div>
 </header>
+{% endif %}
 
 {% block body %}{% endblock %}
 
 {%- set f = c.footer -%}
 {%- set year = now_year() -%}
+{% if not bare %}
 <footer class="site-footer">
   <div class="container footer-inner">
     {{ brand() }}
-    {% if f.links %}
     <ul class="footer-list" role="list">
+      <li><a class="footer-link" href="/about">About</a></li>
+      <li><a class="footer-link" href="/privacy">Privacy</a></li>
+      <li><a class="footer-link" href="/terms">Terms</a></li>
+      {% if c.contact_email %}<li><a class="footer-link" href="/contact">Contact</a></li>{% endif %}
       {% for l in f.links %}<li><a class="footer-link" href="{{ l.href }}"{% if l.external %} rel="noopener"{% endif %}>{{ l.label }}</a></li>{% endfor %}
     </ul>
-    {% endif %}
     <p class="footer-copy">© {% if f.start_year and f.start_year < year %}{{ f.start_year }}–{{ year }}{% else %}{{ f.start_year or year }}{% endif %} {{ f.owner }}</p>
     <a class="footer-top" href="#top" aria-label="Back to top">{{ icon('arrow-up', 'icon icon-sm') }}</a>
   </div>
 </footer>
+{% endif %}
 <script defer src="/js/app.js"></script>
 {% if c.analytics.enabled %}<script defer src="/js/analytics.js" data-provider="{{ c.analytics.provider }}" data-id="{{ c.analytics.id }}" data-src="{{ c.analytics.script_url }}"></script>{% endif %}
 </body>
