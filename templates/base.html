@@ -1,0 +1,107 @@
+{%- set seo = c.seo -%}
+{%- set title = page_title or seo.title -%}
+{%- set description = page_description or seo.description -%}
+{%- set indexable = seo.indexable and not noindex -%}
+{%- macro brand() -%}
+<a class="brand" href="/">
+  {%- if c.brand.logo -%}
+    {%- macro logo_media(asset, extra='', alt='') -%}
+      {%- if asset.src.endswith(('.mp4', '.webm')) -%}
+        <video class="brand-logo{{ extra }}" src="{{ asset.src }}" autoplay loop muted playsinline aria-label="{{ alt }}"></video>
+      {%- else -%}
+        <img class="brand-logo{{ extra }}" src="{{ asset.src }}" alt="{{ alt }}" height="32">
+      {%- endif -%}
+    {%- endmacro -%}
+    {{ logo_media(c.brand.logo, ' logo-light' if c.brand.logo_dark else '', c.app.name if c.brand.hide_name else '') }}
+    {%- if c.brand.logo_dark %}{{ logo_media(c.brand.logo_dark, ' logo-dark') }}{% endif -%}
+  {%- else -%}
+    <span class="brand-mark" aria-hidden="true">{{ c.brand.mark }}</span>
+  {%- endif -%}
+  {%- if not c.brand.hide_name %}<span class="brand-name">{{ c.app.name }}</span>{% endif -%}
+</a>
+{%- endmacro -%}
+<!doctype html>
+<html lang="en" class="no-js" data-theme="{{ c.theme.default }}" data-default-theme="{{ c.theme.default }}" data-themes="{{ c.theme.options | map(attribute='id') | join(',') }}" data-motion="{{ 'on' if c.motion else 'off' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description or '' }}">
+<meta name="robots" content="{{ 'index, follow' if indexable else 'noindex, nofollow' }}">
+{% if seo.canonical and indexable %}<link rel="canonical" href="{{ seo.canonical }}">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ c.app.name }}">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description or '' }}">
+{% if seo.canonical %}<meta property="og:url" content="{{ seo.canonical }}">{% endif %}
+{% if seo.image %}<meta property="og:image" content="{{ seo.image }}">{% endif %}
+{% if seo.image and seo.image_alt %}<meta property="og:image:alt" content="{{ seo.image_alt }}">{% endif %}
+<meta name="twitter:card" content="{{ 'summary_large_image' if seo.image else 'summary' }}">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ description or '' }}">
+{% if seo.image %}<meta name="twitter:image" content="{{ seo.image }}">{% endif %}
+{% if c.favicon %}<link rel="icon" href="{{ c.favicon.src }}">{% else %}<link rel="icon" href="/favicon.svg" type="image/svg+xml">{% endif %}
+<link rel="preload" href="/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<script src="/js/theme-init.js"></script>
+<link rel="stylesheet" href="/css/styles.css">
+{% if has_theme_css %}<link rel="stylesheet" href="/theme.css">{% endif %}
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    {{ brand() }}
+    <div class="header-actions">
+      {% if c.theme.selector %}
+      <div class="theme-menu" data-theme-menu hidden>
+        <button class="icon-btn theme-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list" data-theme-button>
+          <span class="sr-only" data-theme-label>Change theme</span><span class="swatch swatch-lg" data-theme-swatch></span>
+        </button>
+        <ul class="theme-list" id="theme-list" role="list">
+          {% for t in c.theme.options %}
+          <li><button class="theme-option" type="button" data-theme-option="{{ t.id }}" aria-pressed="false"><span class="swatch swatch-{{ t.id }}"></span><span>{{ t.label }}</span>{{ icon('check', 'icon icon-sm theme-check') }}</button></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% if c.nav or c.header_cta %}
+      <button class="icon-btn menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle hidden>
+        <span class="sr-only">Menu</span>{{ icon('menu', 'icon icon-open') }}{{ icon('close', 'icon icon-close') }}
+      </button>
+      {% endif %}
+    </div>
+    {% if c.nav or c.header_cta %}
+    <nav class="site-nav" id="site-nav" aria-label="Primary" data-nav>
+      <div class="nav-clip"><ul class="nav-list">
+        {% for l in c.nav %}
+        <li><a class="nav-link" href="{{ l.href }}"{% if l.external %} rel="noopener"{% endif %}>{{ l.label }}{% if l.external %}{{ icon('arrow-up-right', 'icon icon-xs') }}{% endif %}</a></li>
+        {% endfor %}
+        {% if c.header_cta %}<li class="nav-cta"><a class="btn btn-primary btn-sm" href="{{ c.header_cta.href }}"{% if c.header_cta.external %} rel="noopener"{% endif %}>{{ c.header_cta.label }}</a></li>{% endif %}
+      </ul></div>
+    </nav>
+    {% endif %}
+  </div>
+</header>
+
+{% block body %}{% endblock %}
+
+{%- set f = c.footer -%}
+{%- set year = now_year() -%}
+<footer class="site-footer">
+  <div class="container footer-inner">
+    {{ brand() }}
+    {% if f.links %}
+    <ul class="footer-list" role="list">
+      {% for l in f.links %}<li><a class="footer-link" href="{{ l.href }}"{% if l.external %} rel="noopener"{% endif %}>{{ l.label }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+    <p class="footer-copy">© {% if f.start_year and f.start_year < year %}{{ f.start_year }}–{{ year }}{% else %}{{ f.start_year or year }}{% endif %} {{ f.owner }}</p>
+    <a class="footer-top" href="#top" aria-label="Back to top">{{ icon('arrow-up', 'icon icon-sm') }}</a>
+  </div>
+</footer>
+<script defer src="/js/app.js"></script>
+{% if c.analytics.enabled %}<script defer src="/js/analytics.js" data-provider="{{ c.analytics.provider }}" data-id="{{ c.analytics.id }}" data-src="{{ c.analytics.script_url }}"></script>{% endif %}
+</body>
+</html>

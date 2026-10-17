@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block body %}
+{% set h = c.hero %}
+{% set new_tab = c.section.new_tab %}
+{% set target = ' target="_blank" rel="noopener noreferrer"' | safe if new_tab else ' rel="noopener"' | safe %}
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title" class="hero-title">{% for word in h.headline.split() %}<span class="w"><span>{{ word }}</span></span> {% endfor %}</h1>
+        {% if h.description %}<p class="hero-text">{{ h.description }}</p>{% endif %}
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#products">{{ h.primary_label }}<span class="btn-chip">{{ icon('arrow-down', 'icon icon-sm') }}</span></a>
+          {% if h.secondary %}<a class="btn btn-ghost btn-lg" href="{{ h.secondary.href }}"{% if h.secondary.external %} rel="noopener"{% endif %}>{{ h.secondary.label }}</a>{% endif %}
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg class="orbit" viewBox="-200 -200 400 400" focusable="false">
+          <g class="orbit-rings">
+            <circle r="72" pathLength="1"/><circle r="118" pathLength="1"/><circle r="168" pathLength="1"/><circle class="ring-dash" r="196" pathLength="1"/>
+          </g>
+          <g class="orbit-spokes">{% for n in orbit %}<line x1="0" y1="0" x2="{{ n.x }}" y2="{{ n.y }}" pathLength="1"/>{% endfor %}</g>
+          <g class="orbit-core"><circle r="36"/><text y="11" text-anchor="middle">{{ c.brand.mark }}</text></g>
+          {% for n in orbit %}
+          <g transform="translate({{ n.x }} {{ n.y }})"><g class="orbit-node product-{{ n.product.id }}">
+            <circle r="31"/>
+            {% if n.product.logo %}<image href="{{ n.product.logo.src }}" x="-18" y="-18" width="36" height="36"/>
+            {% else %}<g class="orbit-icon" transform="translate(-17 -17) scale(1.42)">{{ icon_paths(n.product.icon) }}</g>{% endif %}
+          </g></g>
+          {% endfor %}
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="showcase" id="products" aria-labelledby="products-title">
+    <h2 id="products-title" class="sr-only">{{ c.section.title }}</h2>
+    <div class="container showcase-stack">
+      {% for p in c.products %}
+      <article class="panel product-{{ p.id }} panel-{{ 'a' if loop.index is odd else 'b' }}" id="product-{{ p.id }}" data-reveal data-spotlight>
+        <div class="panel-body">
+          {% if p.category %}<p class="panel-kicker">{{ p.category }}</p>{% endif %}
+          <h3 class="panel-title">{{ p.name }}</h3>
+          <p class="panel-text">{{ p.description }}</p>
+          <div class="panel-actions">
+            <a class="btn btn-primary btn-lg" href="{{ p.url }}"{{ target }}>{{ p.cta_label }}<span class="sr-only">: {{ p.name }}{{ ' (opens in a new tab)' if new_tab }}</span><span class="btn-chip">{{ icon('arrow-up-right', 'icon icon-sm') }}</span></a>
+            {% if p.fallback_url %}<a class="btn btn-ghost btn-lg" href="{{ p.fallback_url }}"{{ target }}>{{ c.section.fallback_label }}<span class="sr-only"> for {{ p.name }}{{ ' (opens in a new tab)' if new_tab }}</span></a>{% endif %}
+          </div>
+        </div>
+        <div class="panel-art" aria-hidden="true">
+          <span class="art-ring art-ring-1"></span><span class="art-ring art-ring-2"></span><span class="art-ring art-ring-3"></span>
+          {% if p.logo %}<span class="art-tile art-tile-logo"><img src="{{ p.logo.src }}" alt="" loading="lazy"></span>
+          {% else %}<span class="art-tile">{{ icon(p.icon, 'icon icon-xl') }}</span>{% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+{% endblock %}

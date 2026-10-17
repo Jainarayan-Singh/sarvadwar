@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% set page_title = title ~ " – " ~ c.app.name %}
+{% set page_description = text %}
+{% set noindex = true %}
+{% block body %}
+<main id="main" class="message">
+  <div class="container message-inner">
+    <p class="message-code" data-reveal>{{ code }}</p>
+    <h1 class="message-title" data-reveal>{{ title }}</h1>
+    <p class="message-text" data-reveal>{{ text }}</p>
+    <a class="btn btn-primary" href="/" data-reveal>Back to home</a>
+  </div>
+</main>
+{% endblock %}
